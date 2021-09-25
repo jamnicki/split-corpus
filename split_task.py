@@ -3,16 +3,16 @@ from main import split_corpus
 
 
 def clear_folder(relative_path: str):
-    clear_command = f'rm {relative_path}/*'
+    clear_command = f"rm {relative_path}/*"
     decision = input(f"Executing:\n\t> {clear_command}\n\nProceed (y/n)?")
-    if decision.lower() == 'y':
+    if decision.lower() == "y":
         os.system(clear_command)
-        print(f'Clearing {relative_path}...\n')
+        print(f"Clearing {relative_path}...\n")
 
 
 def split_task():
-    INPUT_FOLDER = '/media/jamnicki/HDD/__Test_input/tematy'
-    OUTPUT_FOLDER = '/media/jamnicki/HDD/__Test_output/tematy'
+    INPUT_FOLDER = "/media/jamnicki/HDD/__Test_input/tematy"
+    OUTPUT_FOLDER = "/media/jamnicki/HDD/__Test_output/tematy"
 
     if os.path.exists(OUTPUT_FOLDER) and os.listdir(OUTPUT_FOLDER):
         clear_folder(OUTPUT_FOLDER)

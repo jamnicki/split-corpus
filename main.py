@@ -25,7 +25,7 @@ def _update_last_chunk(tail_data: str, chunk_file_name: str,
 
 @log_profile
 def split_corpus(source_path: str, destination_path: str, file_name: str,
-                 chunk_size: int, last_chunk_ratio=0.5, sep_diff_ratio=0.05,
+                 chunk_size: int, last_chunk_ratio=0.5, sep_diff_ratio=0.02,
                  separators=[". ", "!", "?", "...", ".", ",", " "]):
     file_size: str = os.path.getsize(source_path)
     if file_size == 0:

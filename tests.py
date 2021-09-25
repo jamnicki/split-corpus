@@ -1,6 +1,6 @@
 import os
 import json
-from scipy.stats import tstd as standard_deviation
+from statistics import stdev as standard_deviation
 from unittest import TestCase, TestSuite, TextTestRunner, defaultTestLoader
 
 
