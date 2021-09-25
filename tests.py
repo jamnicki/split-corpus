@@ -1,4 +1,6 @@
+import os
 import json
+from scipy.stats import tstd as standard_deviation
 from unittest import TestCase, TestSuite, TextTestRunner, defaultTestLoader
 
 
@@ -33,8 +35,20 @@ class TestSplit(TestCase):
                 with open(chunk_path, "r") as chunk_file:
                     chunks_data += chunk_file.read()
 
-            err_msg = f"\n\n{parent_file_path}: missing data in chunks!"
+            err_msg = f"\n\n{parent_file_path}: Missing data in chunks!"
             self.assertEqual(parent_data, chunks_data, msg=err_msg)
 
-    def test_chunks_size_std_deviation(self):
-        pass
+    def test_chunks_size(self):
+        for parent_file_path, chunk_paths in self.split_info.items():
+            parent_size = os.path.getsize(parent_file_path)
+            chunks_size = []
+            for chunk_path in chunk_paths:
+                chunk_size = os.path.getsize(chunk_path)
+                chunks_size.append(chunk_size)
+
+            err_msg = f"\n\n{parent_file_path}: Chunk sizes vary too much!"
+            self.assertLessEqual(
+                standard_deviation(chunks_size),
+                0.05 * parent_size,
+                msg=err_msg
+            )

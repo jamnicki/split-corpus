@@ -2,6 +2,7 @@ import os
 import logging
 from typing import List
 from pathlib import Path
+from profiling import log_profile
 
 
 def utf8size(string: str) -> int:
@@ -22,8 +23,10 @@ def _update_last_chunk(tail_data: str, chunk_file_name: str,
     logging.debug(f'Updating last chunk({chunk_file_name})...')
 
 
+@log_profile
 def split_corpus(source_path: str, destination_path: str, file_name: str,
-                 chunk_size: int, last_chunk_ratio=0.5, sep_diff_ratio=0.05):
+                 chunk_size: int, last_chunk_ratio=0.5, sep_diff_ratio=0.05,
+                 separators=[". ", "!", "?", "...", ".", ",", " "]):
     file_size: str = os.path.getsize(source_path)
     if file_size == 0:
         logging.error('File is empty!')
@@ -37,7 +40,6 @@ def split_corpus(source_path: str, destination_path: str, file_name: str,
     Path(destination_path).mkdir(parents=True, exist_ok=True)
 
     output_files: List[str] = []
-    separators = [". ", "!", "?", "...", ".", ",", " "]
     read_buffer_size = int(chunk_size / 4)
     with open(source_path, "r") as file_stream:
         logging.debug(f'Processing {source_path}... ({file_size*10**-6} MB)\n')
