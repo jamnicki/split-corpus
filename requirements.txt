@@ -1,0 +1,1 @@
+git+https://github.com/jamnicki/profile-logger.git#profile-logger

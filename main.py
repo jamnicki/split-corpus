@@ -2,7 +2,10 @@ import os
 import logging
 from typing import List
 from pathlib import Path
-from profiling import log_profile
+try:
+    from profile_logger import log_profile
+except ModuleNotFoundError:
+    print("To enable profile logging install profile-logger module.")
 
 
 def utf8size(string: str) -> int:
@@ -23,7 +26,7 @@ def _update_last_chunk(tail_data: str, chunk_file_name: str,
     logging.debug(f'Updating last chunk({chunk_file_name})...')
 
 
-@log_profile
+@log_profile(log_folder="profile_logs")
 def split_corpus(source_path: str, destination_path: str, file_name: str,
                  chunk_size: int, last_chunk_ratio=0.5, sep_diff_ratio=0.02,
                  separators=[". ", "!", "?", "...", ".", ",", " "]):
